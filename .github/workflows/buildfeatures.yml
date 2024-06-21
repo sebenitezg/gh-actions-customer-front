@@ -4,26 +4,34 @@
 name: Build features
 
 on:
-  pull_request:
-    branches: feature/
+  push:
+    branches: feature/*
 
 jobs:
   build:
-
-    runs-on: windows-lates
-    
+    runs-on: ubuntu-latest
     steps:
-    
-    - uses: actions/checkout@v3
-    
-    - name: Use Node.js 18
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
-        cache: 'npm'
-        
-    - run: npm ci
-    
-    - run: npm run build --if-present
-    
-    - run: npm test
+      - uses: actions/checkout@v4
+      - name: pull and checkout from git repository
+        run: |
+          echo "pulling and checking out from git repository"
+      
+      - name: Set up Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      
+      - name: Install npm packages
+        run: npm install
+      
+      - name: Update Angular
+        run: npm install -g @angular/cli@latest
+      
+      - name: Run tests
+        run: |
+          ng test --watch=false
+          ng build --prod
+          echo "running tests and build angular app"
+      
+      - name: Build
+        run: ng build --prod
