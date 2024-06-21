@@ -32,6 +32,3 @@ jobs:
           ng test --watch=false
           ng build
           echo "running tests and build angular app"
-      
-      - name: Build
-        run: ng build --prod
