@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - name: pull and checkout from git repository
@@ -30,7 +30,7 @@ jobs:
       - name: Run tests
         run: |
           ng test --watch=false
-          ng build --prod
+          ng build
           echo "running tests and build angular app"
       
       - name: Build
